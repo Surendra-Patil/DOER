@@ -5,7 +5,7 @@
         name: wiki_smallest
         image: surendrapatil/kiwix
         networks:
-          - name: surendra-network
+          - name: doer-network
             ipv4_address: 172.20.0.11
         env:
           VIRTUAL_HOST: wiki.doer

@@ -5,7 +5,7 @@
         name: nginx-proxy
         image: jwilder/nginx-proxy
         networks:
-          - name: surendra-network
+          - name: doer-network
             ipv4_address: 172.20.0.10
         ports:
           - "80:80"

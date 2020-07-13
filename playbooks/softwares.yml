@@ -10,7 +10,7 @@
         name: softwares
         image: nginx
         networks:
-          - name: surendra-network
+          - name: doer-network
             ipv4_address: 172.20.0.12
         env:
           VIRTUAL_HOST: software.doer
