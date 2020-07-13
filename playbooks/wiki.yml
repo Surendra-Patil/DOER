@@ -1,0 +1,17 @@
+- hosts: 158.144.43.4
+  tasks:
+    - name: Run Wiki docker container
+      docker_container:
+        name: wiki_smallest
+        image: surendrapatil/kiwix
+        networks:
+          - name: surendra-network
+            ipv4_address: 172.20.0.11
+        env:
+          VIRTUAL_HOST: wiki.doer
+        ports:
+          - "8001:80"
+        state: started
+        tty: true
+        detach: true         
+#Volumes to be added based on folder with different wikizim files mounted at /home/wikipedia.zim

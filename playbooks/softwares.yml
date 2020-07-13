@@ -1,0 +1,23 @@
+- hosts: 158.144.43.4
+  tasks:
+    - name: Creates directory
+      file:
+        path: "/data/softwares"
+        state: directory
+
+    - name: All Softwares available to download for everyone
+      docker_container:
+        name: softwares
+        image: nginx
+        networks:
+          - name: surendra-network
+            ipv4_address: 172.20.0.12
+        env:
+          VIRTUAL_HOST: software.doer
+        ports:
+          - "8002:80"
+        state: started
+        tty: true
+        detach: true 
+        volumes:
+          - "/data/softwares:/usr/share/nginx/html:ro" 

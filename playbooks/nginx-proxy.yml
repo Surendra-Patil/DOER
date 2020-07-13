@@ -1,0 +1,16 @@
+- hosts: 192.168.43.25
+  tasks:
+    - name: Nginx Reverse Proxy to server DNS
+      docker_container:
+        name: nginx-proxy
+        image: jwilder/nginx-proxy
+        networks:
+          - name: surendra-network
+            ipv4_address: 172.20.0.10
+        ports:
+          - "80:80"
+        state: started
+        tty: true
+        detach: true
+        volumes:
+          - "/var/run/docker.sock:/tmp/docker.sock:ro"
