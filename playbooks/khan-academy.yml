@@ -1,4 +1,4 @@
-- hosts: 158.144.43.4
+- hosts: "{{ variable_host | default('localhost') }}"
   tasks:
     - name: Kolibri container
       docker_container:
@@ -14,4 +14,4 @@
           - "8005:8080"
         state: started
         tty: true
-        detach: true         
+        detach: true

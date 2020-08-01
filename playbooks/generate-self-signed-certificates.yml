@@ -1,4 +1,4 @@
-- hosts: 158.144.43.4
+- hosts: "{{ variable_host | default('localhost') }}"
   tasks:
     - name: Generated Self Signed certificates
       command: docker exec -it nginx-proxy bash -c 'openssl req  -subj "/C=JO/CN=*.metastudio.org"  -x509 -nodes -days 365  -newkey rsa:2048 -keyout metastudio.org.key -out metastudio.org.crt'

@@ -1,4 +1,4 @@
-- hosts: 158.144.43.4
+- hosts: "{{ variable_host | default('localhost') }}"
   tasks:
     - name: Run Wiki docker container
       docker_container:
@@ -13,5 +13,5 @@
           - "8001:80"
         state: started
         tty: true
-        detach: true         
+        detach: true
 #Volumes to be added based on folder with different wikizim files mounted at /home/wikipedia.zim

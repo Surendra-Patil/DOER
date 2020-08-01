@@ -1,4 +1,4 @@
-- hosts: 158.144.43.4
+- hosts: "{{ variable_host | default('localhost') }}"
   tasks:
     - name: Tools container
       docker_container:
@@ -14,4 +14,4 @@
           - "8006:80"
         state: started
         tty: true
-        detach: true         
+        detach: true

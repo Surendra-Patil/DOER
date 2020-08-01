@@ -1,4 +1,4 @@
-- hosts: 158.144.43.4
+- hosts: "{{ variable_host | default('localhost') }}"
   tasks:
     - name: Portainer to manage containers
       docker_container:

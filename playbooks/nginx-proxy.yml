@@ -1,4 +1,4 @@
-- hosts: 192.168.43.25
+- hosts: "{{ variable_host | default('localhost') }}"
   tasks:
     - name: Nginx Reverse Proxy to server DNS
       docker_container:
