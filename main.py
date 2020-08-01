@@ -107,6 +107,16 @@ def khan():
     return get_input()
 
 
+def softwares():
+    install_softwares = "ansible-playbook --private-key={} playbooks/softwares.yml -u {} --extra-vars \"variable_host={}\"".format(
+        ssh_key_path, remote_user, installation_ip_addr)
+    os.system(install_softwares)
+    delegator.run(
+        "echo '{}' software.doer  >> /etc/hosts ".format(installation_ip_addr))
+    print("\n \n Please place softwares in /data/softwares directory/folder \n \n")
+    return get_input()
+
+
 def sugar():
     print("Coming soon")
     return get_input()
@@ -123,6 +133,7 @@ switcher = {
     4: khan,
     5: sugar,
     6: doer_tools,
+    7: softwares,
     0: quit_program
 
 
@@ -139,7 +150,7 @@ def numbers_to_strings(argument):
 
 def get_input():
     argument = input(
-        " \n Select the resource (you want to install: \n 1. Preinstall Configurations \n 2. Portainer ( For managing all websites ) \n 3. Offline Wikipedia \n 4. Khan Academy \n 5. Sugar Labs \n 6. DOER Tools \n \n 0. Quit the installation \n > ")
+        " \n Select the resource (you want to install: \n 1. Preinstall Configurations \n 2. Portainer ( For managing all websites ) \n 3. Offline Wikipedia \n 4. Khan Academy \n 5. Sugar Labs \n 6. DOER Tools \n 7. Softwares to Download \n \n 0. Quit the installation \n > ")
     print(numbers_to_strings(int(argument)))
 
 
