@@ -1,0 +1,17 @@
+- hosts: "{{ variable_host | default('localhost') }}"
+  tasks:
+    - name: Kolibri container
+      docker_container:
+        name: kolibri
+        image: quantumobject/docker-kolibri
+        networks:
+          - name: doer-network
+            ipv4_address: 172.20.0.14
+        env:
+          VIRTUAL_HOST: kolibri.doer
+          VIRTUAL_PORT: "8080"
+        ports:
+          - "8005:8080"
+        state: started
+        tty: true
+        detach: true

@@ -1,0 +1,29 @@
+- hosts: "{{ variable_host | default('localhost') }}"
+  tasks:
+    - name: Creates directory
+      file:
+        path: "/data/softwares"
+        state: directory
+
+    - name: All Softwares available to download for everyone
+      docker_container:
+        name: softwares
+        image: nginx
+        networks:
+          - name: "{{ variable_doer_network | default('doer-network') }}"
+            ipv4_address: 172.20.0.12
+        env:
+          VIRTUAL_HOST: software.doer
+        ports:
+          - "8002:80"
+        state: started
+        tty: true
+        detach: true
+        volumes:
+          - "/data/softwares:/usr/share/nginx/html:ro"
+
+    - name: Updating Nginx configuration
+      command: docker exec -it softwares sed -i '/index  index.html index.htm;/c\index  index.html index.htm; autoindex on;' /etc/nginx/conf.d/default.conf
+
+    - name: Refreshing Nginx
+      command: docker exec -it softwares /etc/init.d/nginx reload

@@ -1,0 +1,4 @@
+- hosts: "{{ variable_host | default('localhost') }}"
+  tasks:
+    - name: Creating DOER network
+      command: docker network create --subnet=172.20.0.0/24 doer-network

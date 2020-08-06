@@ -1,0 +1,17 @@
+- hosts: "{{ variable_host | default('localhost') }}"
+  tasks:
+    - name: Tools container
+      docker_container:
+        name: doer_tools
+        image: surendrapatil/doer_tools
+        networks:
+          - name: doer-network
+            ipv4_address: 172.20.0.15
+        env:
+          VIRTUAL_HOST: turtle.doer,en.astroamer.doer,hi.astroamer.doer,te.astroamer.doer,en.icecubes.doer,hi.icecubes.doer,te.icecubes.doer,en.solarsystem.doer,hi.solarsystem.doer,te.solarsystem.doer,solarsystem.doer,linearequation.doer,openstory.doer,runkittyrun.doer,ratiopatterns.doer,agespuzzle.doer,factorisation.doer,musicblocks.doer,physics.doer
+          VIRTUAL_PORT: "80"
+        ports:
+          - "8006:80"
+        state: started
+        tty: true
+        detach: true

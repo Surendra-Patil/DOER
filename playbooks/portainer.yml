@@ -1,0 +1,21 @@
+- hosts: "{{ variable_host | default('localhost') }}"
+  tasks:
+    - name: Portainer to manage containers
+      docker_container:
+        name: portainer
+        image: portainer/portainer
+        networks:
+          - name: doer-network
+            ipv4_address: 172.20.0.13
+        ports:
+          - "8003:8000"
+          - "8004:9000"
+        state: started
+        tty: true
+        detach: true
+        env:
+          VIRTUAL_HOST: manage.doer
+          VIRTUAL_PORT: "9000"
+        volumes:
+          - "/var/run/docker.sock:/tmp/docker.sock:ro"
+          - "/data/portainer/data:/data "
