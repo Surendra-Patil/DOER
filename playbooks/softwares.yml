@@ -2,7 +2,7 @@
   tasks:
     - name: Creates directory
       file:
-        path: "/data/softwares"
+        path: "/opt/doer/data/softwares"
         state: directory
 
     - name: All Softwares available to download for everyone
@@ -20,7 +20,7 @@
         tty: true
         detach: true
         volumes:
-          - "/data/softwares:/usr/share/nginx/html:ro"
+          - "/opt/doer/data/softwares:/usr/share/nginx/html:ro"
 
     - name: Updating Nginx configuration
       command: docker exec -it softwares sed -i '/index  index.html index.htm;/c\index  index.html index.htm; autoindex on;' /etc/nginx/conf.d/default.conf
