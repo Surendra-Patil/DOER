@@ -5,14 +5,14 @@ Automated deployment of containers for OpenEducationalResource.
 This installation requires a local machine and a remote machine. Local and remote machines can be running on any linux distribution.
 > Same local machine can also be used as remote machine if SSH keys for the linux *user* are configured for the localhost.
 ### Pre-requisite on local machine
-* Ansible
-* Python3
-* Git
+* Ansible ([*Install*](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-ubuntu))
+* Python3 ([*Install*](https://www.python.org/downloads/))
+* Git ([*Install*](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git))
 
 ### Pre-requisite on remote machine
-* Ansible
-* Docker
-* Git
+* Ansible ([*Install*](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-ubuntu))
+* Docker ([*Install*](https://docs.docker.com/engine/install/ubuntu/))
+* Git ([*Install*](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git))
 
 ### Install
 1. Clone the DOER git repository on local machine.
