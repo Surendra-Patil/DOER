@@ -1,0 +1,9 @@
+---
+- name: Write docker-compose file
+  copy:
+    src: docker-compose.yml
+    dest: /tmp/test
+
+- name: Run docker service
+  docker_compose:
+    project_src: /tmp/test
