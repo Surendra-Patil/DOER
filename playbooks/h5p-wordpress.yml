@@ -1,0 +1,47 @@
+- hosts: "{{ variable_host | default('localhost') }}"
+  tasks:
+    - name: Creates wordpress directory
+      file:
+        path: "/opt/doer/data/wordpress"
+        state: directory
+
+    - name: Starting H5P database
+      docker_container:
+        name: h5p-mysql1
+        image: h5pmysql:v1
+        networks:
+          - name: "{{ variable_doer_network | default('doer-network') }}"
+            ipv4_address: 172.20.0.16
+        env:
+          MYSQL_USER: wordpress
+          MYSQL_PASSWORD: 77ck77ck
+          MYSQL_ROOT_PASSWORD: "77ck77ck"
+        state: started
+        tty: true
+        detach: true
+
+    - name: Migrating database
+      shell: cat /opt/doer/data/wordpress/wordpress_data.sql | docker exec -i h5p-mysql1 /usr/bin/mysql -u wordpress --password=77ck77ck wordpress
+
+    - name: H5P content
+      docker_container:
+        name: h5p-wordpress
+        image: h5pwordpress:glab
+        networks:
+          - name: "{{ variable_doer_network | default('doer-network') }}"
+            ipv4_address: 172.20.0.17
+        env:
+          VIRTUAL_HOST: interx.metastudio.org
+          WORDPRESS_DB_HOST: db
+          WORDPRESS_DB_USER: wordpress
+          WORDPRESS_DB_PASSWORD: 77ck77ck
+          WORDPRESS_DB_NAME: wordpress
+        links:
+          - "h5p-mysql1:db"
+        ports:
+          - "8010:80"
+        state: started
+        tty: true
+        detach: true
+        volumes:
+          - "/opt/doer/data/wordpress/wordpress_data:/var/www/html:rw"

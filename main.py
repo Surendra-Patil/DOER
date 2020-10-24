@@ -5,7 +5,7 @@ from inspect import isfunction
 from subprocess import call
 
 installation_ip_addr = "localhost"
-ssh_key_path = "/home/root/.ssh/id_rsa"
+ssh_key_path = "~/.ssh/id_rsa.pub"
 remote_user = "root"
 
 
@@ -113,7 +113,7 @@ def softwares():
     os.system(install_softwares)
     delegator.run(
         "echo '{}' software.doer  >> /etc/hosts ".format(installation_ip_addr))
-    print("\n \n Please place softwares in /data/softwares directory/folder \n \n")
+    print("\n \n Please place softwares in /opt/doer/data/softwares directory/folder \n \n")
     return get_input()
 
 

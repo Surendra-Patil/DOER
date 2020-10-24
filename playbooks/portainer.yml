@@ -18,4 +18,4 @@
           VIRTUAL_PORT: "9000"
         volumes:
           - "/var/run/docker.sock:/tmp/docker.sock:ro"
-          - "/data/portainer/data:/data "
+          - "/opt/doer/data/portainer/data:/data "

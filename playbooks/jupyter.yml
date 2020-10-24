@@ -1,0 +1,32 @@
+- hosts: "{{ variable_host | default('localhost') }}"
+  tasks:
+    - name: Creates directory
+      file:
+        path: "/opt/doer/data/juypter"
+        state: directory
+
+    - name: Installing Jupyter Notebook
+      docker_container:
+        name: jupyter
+        image: jupyter/all-spark-notebook
+        networks:
+          - name: "{{ variable_doer_network | default('doer-network') }}"
+            ipv4_address: 172.20.0.18
+        env:
+          VIRTUAL_HOST: juypter.doer
+          JUPYTER_ENABLE_LAB: "yes"
+          VIRTUAL_PORT: "8888"
+        ports:
+          - "10000:8888"
+        state: started
+        tty: true
+        detach: true
+        volumes:
+          - "/opt/doer/data/juypter:/home/jovyan/work:ro"
+
+    - name: Getting Token
+      command: docker exec -it jupyter jupyter notebook list | grep token
+      register: command_result
+
+    - debug:
+        var: command_result.stdout_lines
