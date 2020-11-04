@@ -1,0 +1,18 @@
+- hosts: "{{ variable_host | default('localhost') }}"
+  tasks:
+    - name: Board container
+      docker_container:
+        name: board
+        image: jgraph/drawio
+        networks:
+          - name: "{{ variable_doer_network | default('doer-network') }}"
+            ipv4_address: 172.20.0.18
+        env:
+          VIRTUAL_HOST: board.doer
+          VIRTUAL_PORT: "8443"
+          VIRTUAL_PROTO: https
+        ports:
+          - "8020:8443"
+        state: started
+        tty: true
+        detach: true

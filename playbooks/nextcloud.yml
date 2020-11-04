@@ -1,0 +1,47 @@
+- hosts: "{{ variable_host | default('localhost') }}"
+  tasks:
+    - name: Creates nextcloud Directory
+      file:
+        path: "/opt/doer/data/nextcloud"
+        state: directory
+        
+    - name: Starting nextcloud database
+      docker_container:
+        name: cloud-mysql
+        image: mariadb
+        networks:
+          - name: "{{ variable_doer_network | default('doer-network') }}"
+            ipv4_address: 172.20.0.21
+        env:
+          MYSQL_ROOT_PASSWORD: doer@123
+          MYSQL_PASSWORD: doer@123
+          MYSQL_DATABASE: nextcloud
+          MYSQL_USER: nextcloud
+        state: started
+        tty: true
+        detach: true
+        restart_policy: always
+        command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+        volumes:
+          - "/opt/doer/data/nextcloud/db:/var/lib/mysql:rw"
+
+
+    - name: Cloud container
+      docker_container:
+        name: cloud
+        image: nextcloud
+        networks:
+          - name: "{{ variable_doer_network | default('doer-network') }}"
+            ipv4_address: 172.20.0.22
+        env:
+          VIRTUAL_HOST: cloud.doer
+        links:
+          - "cloud-mysql:db"
+        ports:
+          - "8022:80"
+        state: started
+        tty: true
+        detach: true
+#        volumes:
+#          - "/opt/doer/data/nextcloud/nextcloud:/var/www/html:rw"
+        restart_policy: always
