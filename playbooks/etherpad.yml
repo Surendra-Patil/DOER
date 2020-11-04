@@ -1,0 +1,17 @@
+- hosts: "{{ variable_host | default('localhost') }}"
+  tasks:
+    - name: Etherpad container
+      docker_container:
+        name: etherpad
+        image: etherpad/etherpad
+        networks:
+          - name: "{{ variable_doer_network | default('doer-network') }}"
+            ipv4_address: 172.20.0.17
+        env:
+          VIRTUAL_HOST: notes.doer
+          VIRTUAL_PORT: "9001"
+        ports:
+          - "8010:9001"
+        state: started
+        tty: true
+        detach: true

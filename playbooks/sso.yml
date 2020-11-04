@@ -1,0 +1,19 @@
+- hosts: "{{ variable_host | default('localhost') }}"
+  tasks:
+    - name: SSO Setup
+      docker_container:
+        name: sso
+        image: quay.io/keycloak/keycloak:11.0.2
+        networks:
+          - name: "{{ variable_doer_network | default('doer-network') }}"
+            ipv4_address: 172.20.0.24
+        env:
+          VIRTUAL_HOST: login.doer
+          VIRTUAL_PORT: "8080"
+          KEYCLOAK_PASSWORD: doer@123
+          KEYCLOAK_USER: admin
+        ports:
+          - "8025:8080"
+        state: started
+        tty: true
+        detach: true
