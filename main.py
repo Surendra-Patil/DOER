@@ -121,6 +121,61 @@ def sugar():
     print("Coming soon")
     return get_input()
 
+def draw_io():
+    install_softwares = "ansible-playbook --private-key={} playbooks/drawio.yml -u {} --extra-vars \"variable_host={}\"".format(
+        ssh_key_path, remote_user, installation_ip_addr)
+    os.system(install_softwares)
+    delegator.run(
+        "echo '{}' board.doer  >> /etc/hosts ".format(installation_ip_addr))
+    return get_input()
+
+def drawpile():
+    install_softwares = "ansible-playbook --private-key={} playbooks/drawpile.yml -u {} --extra-vars \"variable_host={}\"".format(
+        ssh_key_path, remote_user, installation_ip_addr)
+    os.system(install_softwares)
+    delegator.run(
+        "echo '{}' drawpile.doer  >> /etc/hosts ".format(installation_ip_addr))
+    return get_input()
+
+def etherpad():
+    install_softwares = "ansible-playbook --private-key={} playbooks/etherpad.yml -u {} --extra-vars \"variable_host={}\"".format(
+        ssh_key_path, remote_user, installation_ip_addr)
+    os.system(install_softwares)
+    delegator.run(
+        "echo '{}' notes.doer  >> /etc/hosts ".format(installation_ip_addr))
+    return get_input()
+
+def h5p():
+    install_softwares = "ansible-playbook --private-key={} playbooks/h5p-wordpress.yml -u {} --extra-vars \"variable_host={}\"".format(
+        ssh_key_path, remote_user, installation_ip_addr)
+    os.system(install_softwares)
+    delegator.run(
+        "echo '{}' interx.metastudio.org  >> /etc/hosts ".format(installation_ip_addr))
+    return get_input()
+
+def jupyter():
+    install_softwares = "ansible-playbook --private-key={} playbooks/jupyter.yml -u {} --extra-vars \"variable_host={}\"".format(
+        ssh_key_path, remote_user, installation_ip_addr)
+    os.system(install_softwares)
+    delegator.run(
+        "echo '{}' juypter.doer  >> /etc/hosts ".format(installation_ip_addr))
+    return get_input()
+
+def nextcloud():
+    install_softwares = "ansible-playbook --private-key={} playbooks/nextcloud.yml -u {} --extra-vars \"variable_host={}\"".format(
+        ssh_key_path, remote_user, installation_ip_addr)
+    os.system(install_softwares)
+    delegator.run(
+        "echo '{}' cloud.doer  >> /etc/hosts ".format(installation_ip_addr))
+    return get_input()
+
+def sso():
+    install_softwares = "ansible-playbook --private-key={} playbooks/sso.yml -u {} --extra-vars \"variable_host={}\"".format(
+        ssh_key_path, remote_user, installation_ip_addr)
+    os.system(install_softwares)
+    delegator.run(
+        "echo '{}' login.doer  >> /etc/hosts ".format(installation_ip_addr))
+    return get_input()
 
 def quit_program():
     quit()
@@ -134,6 +189,13 @@ switcher = {
     5: sugar,
     6: doer_tools,
     7: softwares,
+    8: draw_io,
+    9: drawpile,
+    10: etherpad,
+    11: h5p,
+    12: jupyter,
+    13: nextcloud,
+    14: sso,
     0: quit_program
 
 
@@ -150,7 +212,7 @@ def numbers_to_strings(argument):
 
 def get_input():
     argument = input(
-        " \n Select the resource (you want to install: \n 1. Preinstall Configurations \n 2. Portainer ( For managing all websites ) \n 3. Offline Wikipedia \n 4. Khan Academy \n 5. Sugar Labs \n 6. DOER Tools \n 7. Softwares to Download \n \n 0. Quit the installation \n > ")
+        " \n Select the resource (you want to install: \n 1. Preinstall Configurations \n 2. Portainer ( For managing all websites ) \n 3. Offline Wikipedia \n 4. Khan Academy \n 5. Sugar Labs \n 6. DOER Tools \n 7. Softwares to Download \n 8. Draw Board \n 9. Drawpile \n 10. Etherpad (Notes) \n 11. H5P Wordpress \n 12. Jupyter Lab \n 13. NextCloud \n 14. SSO \n \n 0. Quit the installation \n > ")
     print(numbers_to_strings(int(argument)))
 
 
